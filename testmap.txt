@@ -1,0 +1,30 @@
+'use client'
+import React, { useState, useEffect } from 'react'
+import { MapContainer, TileLayer, Popup, Polygon, Marker } from 'react-leaflet'
+import L from 'leaflet'
+import 'leaflet/dist/leaflet.css';
+import { tehran_coords } from "./data";
+
+function CafesMapCm() {
+    const [coordinates, setCoordinates] = useState([]);
+
+    useEffect(() => {
+        if (!!tehran_coords) {
+            setCoordinates(tehran_coords.map((row) => [row[1], row[0]]));
+        }
+    }, [tehran_coords]);
+
+    return (
+        <MapContainer bounds={coordinates} className='h-full' center={[35.7000, 51.4167]} zoom={4} scrollWheelZoom={true}>
+            <TileLayer
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
+            <Polygon
+                bounds={coordinates}
+                boundsOptions={{ padding: [1, 1] }}
+                positions={coordinates} />
+        </MapContainer>
+    )
+}
+
+export default CafesMapCm
