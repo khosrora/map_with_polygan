@@ -8,10 +8,13 @@ import 'leaflet-draw/dist/leaflet.draw.css'
 
 import { useConfig } from '@/context/IndexContext.js';
 import { toast } from 'sonner'
+import { convertLatLngArray } from '@/utils/changeFormat'
+
 
 function MapCm() {
 
-    const { color } = useConfig()
+
+    const { color, addPolygan } = useConfig()
 
 
     L.Icon.Default.mergeOptions({
@@ -24,21 +27,32 @@ function MapCm() {
     });
 
 
-    const create = e => {
-        console.log(e);
-        console.log(e.layer._latlngs[0]);
+
+    const create = (e) => {
+
+        const option = e.layer.options;
+        const polygonList = e.layer._latlngs[0];
+
+        if (option.color === null) {
+            toast.error('قبل از ایجاد نوع چندضلعی را مشخص کنید.')
+            return
+        }
+
+        let data = {
+            polygon: convertLatLngArray(polygonList),
+            options: option
+        }
         toast('آیا از ثبت روی نقشه مطمئن هستید ؟ ', {
             action: {
                 label: 'بله',
                 onClick: () => {
-                    toast.success('منطقه مورد نظر با موفقیت روی نقشه ثبت شد .')
+                    addPolygan(data)
                 }
             },
         })
     }
 
     return (
-
         <MapContainer className='h-full' center={[35.7000, 51.4167]} zoom={4} scrollWheelZoom={true}>
             <FeatureGroup>
                 <EditControl
@@ -61,7 +75,6 @@ function MapCm() {
             />
 
         </MapContainer>
-
     )
 }
 

@@ -2,6 +2,7 @@
 import { useConfig } from '@/context/IndexContext';
 import React from 'react'
 import { toast } from 'sonner';
+import AddDroneModal from './AddDroneModal';
 
 let colors = [
   {
@@ -36,32 +37,23 @@ let colors = [
 
 function IndexSideBar() {
 
-  const { setColor, addFakedata } = useConfig()
+  const { setColor } = useConfig()
 
   return (
-    <div className='w-full h-full bg-white' dir='rtl'>
-      <div className="p-4 space-y-4">
+    <div className='w-full h-full bg-white p-4' dir='rtl'>
+      <p>راهنمای اشکال : </p>
+      <div className="my-4 space-y-4">
         {
           colors.map(i =>
-            <div key={i.id} className="flex justify-start items-center gap-x-4 cursor-pointer" onClick={() => {
-              setColor(i.color)
-              addFakedata(i.id)
-              const type = localStorage.getItem('type');
-              if (!type) {
-                localStorage.setItem('type', i.id)
-              } else {
-                localStorage.removeItem('type');
-                localStorage.setItem('type', i.id)
-              }
-              toast.info(` رنگ ${i.color_text} انتخاب شد . `)
-            }
-            }>
+            <div key={i.id} className="flex justify-start items-center gap-x-4 cursor-pointer bg-slate-100 p-2 rounded-md">
               <div className={`${i.style} p-2 rounded-full`}></div>
               <p>{i.text}</p>
             </div>
           )
         }
+        <button className="btn w-full btn-neutral" onClick={() => document.getElementById('my_modal_1').showModal()}>ثبت پهباد</button>
       </div>
+      <AddDroneModal />
     </div>
   )
 }
