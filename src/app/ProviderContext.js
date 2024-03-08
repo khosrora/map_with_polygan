@@ -2,7 +2,7 @@
 import React from 'react'
 import { Toaster } from 'sonner';
 
-function Provider({ children }) {
+function ProviderContext({ children }) {
     return (
         <>
             <Toaster richColors closeButton dir='rtl' position='bottom-center' style={{
@@ -15,4 +15,4 @@ function Provider({ children }) {
     )
 }
 
-export default Provider
+export default ProviderContext

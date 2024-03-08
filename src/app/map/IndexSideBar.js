@@ -2,6 +2,7 @@
 import { useConfig } from '@/context/IndexContext';
 import React from 'react'
 import { toast } from 'sonner';
+import { useRouter } from 'next/navigation'
 
 let colors = [
   {
@@ -36,6 +37,7 @@ let colors = [
 
 function IndexSideBar() {
 
+  const router = useRouter();
   const { setColor, addFakedata } = useConfig()
 
   return (
@@ -61,6 +63,7 @@ function IndexSideBar() {
             </div>
           )
         }
+        <button className="btn w-full btn-neutral" onClick={() => router.push('/get_all')}>نمایش زنده</button>
       </div>
     </div>
   )

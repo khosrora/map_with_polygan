@@ -1,8 +1,7 @@
 'use client';
-import { useConfig } from '@/context/IndexContext';
 import React from 'react'
-import { toast } from 'sonner';
 import AddDroneModal from './AddDroneModal';
+import { useRouter } from 'next/navigation'
 
 let colors = [
   {
@@ -37,7 +36,7 @@ let colors = [
 
 function IndexSideBar() {
 
-  const { setColor } = useConfig()
+  const router = useRouter();
 
   return (
     <div className='w-full h-full bg-white p-4' dir='rtl'>
@@ -52,6 +51,7 @@ function IndexSideBar() {
           )
         }
         <button className="btn w-full btn-neutral" onClick={() => document.getElementById('my_modal_1').showModal()}>ثبت پهباد</button>
+        <button className="btn w-full btn-success text-white" onClick={() => router.push('/map')}>ایجاد نقاط</button>
       </div>
       <AddDroneModal />
     </div>

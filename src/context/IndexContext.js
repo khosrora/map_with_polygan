@@ -1,6 +1,6 @@
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import { flyer } from '@/lib/data/flyer';
 import { postDataAPI } from '@/utils/fetchData';
-import React, { createContext, useContext, useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
 const ConfigContext = createContext();
@@ -10,6 +10,7 @@ export const ConfigProvider = ({ children }) => {
     const [color, setColor] = useState(null);
     const [drone, setDrone] = useState([]);
     const [fakeData, setFakseData] = useState(null)
+
 
     useEffect(() => {
         setDrone(flyer)
@@ -31,7 +32,7 @@ export const ConfigProvider = ({ children }) => {
     }
 
     return (
-        <ConfigContext.Provider value={{ color, setColor, fakeData, setFakseData, addPolygan, addFakedata, drone }}>
+        <ConfigContext.Provider value={{ color, setColor, fakeData, setFakseData, addPolygan, addFakedata, drone  }}>
             {children}
         </ConfigContext.Provider>
     );

@@ -5,7 +5,6 @@ import IndexMap from './IndexMap';
 import IndexSideBar from './IndexSideBar';
 
 
-
 function page() {
 
 

@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react'
 import { MapContainer, TileLayer, Polygon, Circle, Marker } from 'react-leaflet'
 
 import 'leaflet/dist/leaflet.css';
-import { testData } from "./data";
 
 
 import { FlyForbidden } from '@/lib/data/FlyForbidden';
@@ -13,18 +12,30 @@ import { DangerAreas } from '@/lib/data/DangerArea';
 import { CautionArea } from '@/lib/data/CautionArea';
 import { useConfig } from '@/context/IndexContext';
 import DroneModal from './DroneModal';
+import { testData } from './data';
 
 function CafesMapCm() {
 
     const { drone } = useConfig()
     const [coordinates, setCoordinates] = useState([]);
-
+    const [data, setData] = useState(null);
 
     useEffect(() => {
         if (!!testData) {
             setCoordinates(testData.map((row) => [row[1], row[0]]));
         }
+        setData('test')
+        const socket = new WebSocket(`wss://api.cafesiran.ir/ws/pager/2/`);
+        socket.onmessage = (message) => {
+            console.log('object');
+            console.log(message);
+            setData([1212])
+            // const payload = JSON.parse(message.data);
+            // setPager(pager => [payload, ...pager])
+        }
     }, [testData]);
+
+    console.log(data);
 
     const handleMarkerClick = () => {
         document.getElementById('my_modal_2').showModal()
