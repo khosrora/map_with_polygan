@@ -48,8 +48,8 @@ function GuideList() {
                     </div>
                 )
             }
-            <button className="btn w-full btn-neutral" onClick={() => document.getElementById('my_modal_1').showModal()}>ثبت پهپاد</button>
-            <button className="btn w-full btn-success text-white" onClick={() => router.push('/map')}>ایجاد نقاط</button>
+            <button className="btn w-full btn-outline btn-primary" onClick={() => document.getElementById('my_modal_1').showModal()}>ثبت پهپاد</button>
+            <button className="btn w-full btn-primary text-white" onClick={() => router.push('/map')}>ایجاد نقاط</button>
         </div>
     )
 }

@@ -8,7 +8,7 @@ function ZoneTabs({ typeZone, setTypeZone }) {
     }
 
     return (
-        <div className="my-4">
+        <div className="mt-4">
             <p>راهنمای دسته بندی مناطق : </p>
             <div role="tablist" className="tabs tabs-bordered my-4">
                 <div role="tab" onClick={() => changeState(1)} className={`tab ${typeZone === 1 ? 'tab-active' : ''}`}>ممنوع</div>
