@@ -55,7 +55,7 @@ function IndexSideBar() {
                 localStorage.removeItem('type');
                 localStorage.setItem('type', i.id)
               }
-              toast.info(` رنگ ${i.color_text} انتخاب شد . `)
+              toast(` رنگ ${i.color_text} انتخاب شد . `)
             }
             }>
               <div className={`${i.style} p-2 rounded-full`}></div>
