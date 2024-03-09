@@ -4,7 +4,7 @@ function DroneModal() {
     return (
         <dialog id="my_modal_2" className="modal" dir='rtl'>
             <div className="modal-box w-11/12 max-w-5xl">
-                <h3 className="font-bold text-lg">اطلاعات پهباد با شماره : <span> IR423423423423423434234 </span></h3>
+                <h3 className="font-bold text-lg">اطلاعات پهپاد با شماره : <span> IR423423423423423434234 </span></h3>
                 <p className="py-4">نام و نام خانوادگی مالک : احسان اسلامی</p>
                 <p className="py-4">تاریخ ثبت : ۱/۷/۱۴۰۰</p>
                 <p>

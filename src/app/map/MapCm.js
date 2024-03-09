@@ -27,21 +27,39 @@ function MapCm() {
     });
 
 
-
     const create = (e) => {
 
-        const option = e.layer.options;
-        const polygonList = e.layer._latlngs[0];
+        const layerType = e.layerType;
 
-        if (option.color === null) {
-            toast.error('قبل از ایجاد نوع چندضلعی را مشخص کنید.')
-            return
+        let data;
+        let polygonList;
+        let option;
+
+        if (layerType === "polygon") {
+            option = e.layer.options;
+            polygonList = e.layer._latlngs[0];
+            if (option.color === null) {
+                toast.error('قبل از ایجاد نوع چندضلعی را مشخص کنید.')
+                return
+            }
+
+            data = {
+                polygon: {
+                    type: "MultiPolygon",
+                    coordinates: [[convertLatLngArray(polygonList)]]
+                },
+                options: option
+            }
+        } else {
+            option = e.layer.options;
+            polygonList = e.layer._latlng;
+            const radius = e.layer._radius;
+            console.log(radius);
+
+            
+
         }
 
-        let data = {
-            polygon: convertLatLngArray(polygonList),
-            options: option
-        }
         toast('آیا از ثبت روی نقشه مطمئن هستید ؟ ', {
             action: {
                 label: 'بله',
@@ -57,7 +75,7 @@ function MapCm() {
             <FeatureGroup>
                 <EditControl
                     draw={{
-                        circle: false, rectangle: false, marker: false, circlemarker: false, polygon: {
+                        circle: true, rectangle: false, marker: false, circlemarker: false, polygon: {
                             shapeOptions: {
                                 fillColor: color,
                                 clickable: false,

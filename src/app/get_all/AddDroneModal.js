@@ -11,17 +11,17 @@ function AddDroneModal() {
     } = useForm()
 
     const onSubmit = (data) => console.log(data)
-    console.log(errors);
 
+    
     return (
         <dialog id="my_modal_1" className="modal" dir='rtl'>
             <div className="modal-box w-11/12 max-w-5xl">
-                <h3 className="font-bold text-lg"> ایجاد پهباد </h3>
+                <h3 className="font-bold text-lg"> ایجاد پهپاد </h3>
                 <form onSubmit={handleSubmit(onSubmit)} className='grid grid-cols-2  gap-4 mt-4'>
 
                     <div className="textarea-md">
                         <label htmlFor="">نام و نام خانوادگی</label>
-                        <input type="text" placeholder="نام و نام خانوادگی مالک پهباد را وارد کنید" className="input input-bordered w-full" {...register("fullName", {
+                        <input type="text" placeholder="نام و نام خانوادگی مالک پهپاد را وارد کنید" className="input input-bordered w-full" {...register("fullName", {
                             required: { value: true, message: 'وارد کردن این فیلد الزامی است' }
                         })} />
                         {errors.fullName && <span className='text-xs text-red-600'>{errors.fullName.message}</span>}
@@ -34,8 +34,8 @@ function AddDroneModal() {
                         {errors.serial && <span className='text-xs text-red-600'>{errors.serial.message}</span>}
                     </div>
                     <div className="textarea-md">
-                        <label htmlFor="">نوع پهباد</label>
-                        <input type="text" placeholder="نوع پهباد را وارد کنید" className="input input-bordered w-full" {...register("type", {
+                        <label htmlFor="">نوع پهپاد</label>
+                        <input type="text" placeholder="نوع پهپاد را وارد کنید" className="input input-bordered w-full" {...register("type", {
                             required: { value: true, message: 'وارد کردن این فیلد الزامی است' }
                         })} />
                         {errors.type && <span className='text-xs text-red-600'>{errors.type.message}</span>}
@@ -49,7 +49,7 @@ function AddDroneModal() {
                     </div>
 
 
-                    <button type='submit' className='w-1/4 btn btn-neutral'>ثبت پهباد</button>
+                    <button type='submit' className='w-1/4 btn btn-neutral'>ثبت پهپاد</button>
                 </form>
             </div>
             <form method="dialog" className="modal-backdrop">

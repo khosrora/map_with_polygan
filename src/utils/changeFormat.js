@@ -1,6 +1,10 @@
 
 function convertLatLngArray(inputArray) {
-    return inputArray.map(obj => [obj.lng, obj.lat]);
+    let array = [];
+    array = inputArray.map(obj => [obj.lng, obj.lat]);
+    const len = array.length;
+    array[len - 1] = array[0];
+    return array;
 }
 
 export { convertLatLngArray }

@@ -9,11 +9,18 @@ export const ConfigProvider = ({ children }) => {
 
     const [color, setColor] = useState(null);
     const [drone, setDrone] = useState([]);
-    const [fakeData, setFakseData] = useState(null)
+    const [fakeData, setFakseData] = useState(null);
+    const [listDrones, setListDrones] = useState();
 
 
     useEffect(() => {
-        setDrone(flyer)
+        setDrone(flyer);
+        const socket = new WebSocket(`ws://drone.canso.ir/ws/drone2/`);
+        socket.onmessage = (message) => {
+            const payload = JSON.parse(message.data);
+            console.log(payload);
+            setListDrones(payload)
+        }
     }, [])
 
     const addFakedata = (num) => {
@@ -23,16 +30,18 @@ export const ConfigProvider = ({ children }) => {
     const addPolygan = async (data) => {
         const type = localStorage.getItem('type');
         data.type = Number(type);
-        console.log(data);
-        // const res = await postDataAPI('', data);
-        // console.log(res);
-        // if (res.status === 201) {
-        toast.success('چند ضلعی ارسال ثبت شد')
-        // }
+        try {
+            const res = await postDataAPI('geographic/area/', data);
+            if (res.status === 201) {
+                toast.success('چند ضلعی جدید ثبت شد')
+            }
+        } catch (error) {
+            toast.error('دوباره امتحان کنید')
+        }
     }
 
     return (
-        <ConfigContext.Provider value={{ color, setColor, fakeData, setFakseData, addPolygan, addFakedata, drone  }}>
+        <ConfigContext.Provider value={{ color, setColor, fakeData, setFakseData, addPolygan, addFakedata, drone, listDrones }}>
             {children}
         </ConfigContext.Provider>
     );

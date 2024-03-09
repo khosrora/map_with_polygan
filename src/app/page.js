@@ -11,7 +11,7 @@ export default function Home() {
 
   return (
     <div className="flex flex-col justify-center items-center h-screen" dir='rtl'>
-      <h1 className='text-xl mb-4'>سامانه مدیریت پهبادهای کشاورزی سیرنگ</h1>
+      <h1 className='text-xl mb-4'>سامانه مدیریت پهپادهای کشاورزی سیرنگ</h1>
       <p> در حال دریافت اطلاعات ...  </p>
     </div>
   );

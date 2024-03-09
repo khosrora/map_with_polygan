@@ -14,33 +14,24 @@ import { useConfig } from '@/context/IndexContext';
 import DroneModal from './DroneModal';
 import { testData } from './data';
 
+
 function CafesMapCm() {
 
-    const { drone } = useConfig()
+    const { listDrones } = useConfig()
     const [coordinates, setCoordinates] = useState([]);
-    const [data, setData] = useState(null);
 
     useEffect(() => {
         if (!!testData) {
             setCoordinates(testData.map((row) => [row[1], row[0]]));
         }
-        setData('test')
-        const socket = new WebSocket(`wss://api.cafesiran.ir/ws/pager/2/`);
-        socket.onmessage = (message) => {
-            console.log('object');
-            console.log(message);
-            setData([1212])
-            // const payload = JSON.parse(message.data);
-            // setPager(pager => [payload, ...pager])
-        }
     }, [testData]);
 
-    console.log(data);
+
+
 
     const handleMarkerClick = () => {
         document.getElementById('my_modal_2').showModal()
     }
-
 
     return (
         <>
@@ -49,16 +40,11 @@ function CafesMapCm() {
                 <TileLayer
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
-                {/* <Polygon
-                bounds={coordinates}
-                color={"purple"}
-                boundsOptions={{ padding: [1, 1] }}
-                positions={coordinates} /> */}
 
-                {drone.map((item) => (
+                {
+                    !!listDrones &&
                     <Marker
-                        key={item[0]}
-                        position={[item[0], item[1]]}
+                        position={[listDrones.lat, listDrones.lng]}
                         eventHandlers={{
                             click: () => {
                                 handleMarkerClick(item);
@@ -69,7 +55,20 @@ function CafesMapCm() {
                             iconSize: [50, 50],
                         })}
                     />
-                ))}
+                }
+
+                <Marker
+                    position={[35.7000, 51.4167]}
+                    eventHandlers={{
+                        click: () => {
+                            handleMarkerClick({ id: 1 });
+                        },
+                    }}
+                    icon={L.icon({
+                        iconUrl: '/drone_p.png',
+                        iconSize: [50, 50],
+                    })}
+                />
 
                 {FlyForbidden.map((circle, index) => (
                     <Circle
@@ -98,6 +97,7 @@ function CafesMapCm() {
                     />
                 ))}
 
+
                 {DangerAreas.map((area, index) => (
                     <Polygon
                         key={index}
@@ -114,29 +114,6 @@ function CafesMapCm() {
                     />
                 ))}
 
-
-                <Polygon
-
-                    positions={[
-                        [
-                            35.746512259918504,
-                            51.3463966213927
-                        ],
-                        [
-                            35.74595496991936,
-                            51.46043146873007
-                        ],
-                        [
-                            35.6726373539688,
-                            51.459057554906714
-                        ],
-                        [
-                            35.66789587237085,
-                            51.34090096609935
-                        ]
-                    ]}
-                    pathOptions={{ color: '#000', fillColor: 'black', fillOpacity: 0.35 }}
-                />
 
             </MapContainer>
         </>
