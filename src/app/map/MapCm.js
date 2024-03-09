@@ -45,19 +45,28 @@ function MapCm() {
 
             data = {
                 polygon: {
-                    type: "MultiPolygon",
-                    coordinates: [[convertLatLngArray(polygonList)]]
+                    type: "Polygon",
+                    coordinates: [convertLatLngArray(polygonList)]
                 },
-                options: option
+                options: option,
+                is_circle: false,
             }
         } else {
             option = e.layer.options;
             polygonList = e.layer._latlng;
-            const radius = e.layer._radius;
-            console.log(radius);
-
-            
-
+            const radius = e.layer._mRadius;
+            if (option.color === null) {
+                toast.error('قبل از ایجاد نوع چندضلعی را مشخص کنید.')
+                return
+            }
+            data = {
+                polygon: null,
+                options: option,
+                is_circle: true,
+                center_lat: polygonList.lat,
+                center_long: polygonList.lng,
+                radius
+            }
         }
 
         toast('آیا از ثبت روی نقشه مطمئن هستید ؟ ', {
@@ -75,7 +84,13 @@ function MapCm() {
             <FeatureGroup>
                 <EditControl
                     draw={{
-                        circle: true, rectangle: false, marker: false, circlemarker: false, polygon: {
+                        circle: {
+                            shapeOptions: {
+                                fillColor: color,
+                                clickable: false,
+                                color: color,
+                            }
+                        }, rectangle: false, marker: false, circlemarker: false, polygon: {
                             shapeOptions: {
                                 fillColor: color,
                                 clickable: false,
