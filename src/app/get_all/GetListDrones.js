@@ -37,7 +37,7 @@ function GetListDrones() {
             <input type="checkbox" id="my_modal_7" className="modal-toggle" />
             <div className="modal" role="dialog">
               <div className="modal-box space-y-4">
-                <h3 className="text-xl font-bold">1234567890</h3>
+                <h3 className="text-xl font-etrabold">1234567890</h3>
                 <p className="font-semibold">سیرنگ پلاس</p>
                 <p className=" text-xs leading-6">     
 لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است،
