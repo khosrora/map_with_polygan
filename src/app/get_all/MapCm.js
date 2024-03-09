@@ -13,18 +13,19 @@ import { CautionArea } from '@/lib/data/CautionArea';
 import { useConfig } from '@/context/IndexContext';
 import DroneModal from './DroneModal';
 import { testData } from './data';
-
+import { toast } from 'sonner';
+import { getDataAPI } from '@/utils/fetchData';
 
 function CafesMapCm() {
 
-    const { listDrones } = useConfig()
-    const [coordinates, setCoordinates] = useState([]);
+    const { listDrones, polyganDrones, load } = useConfig()
+    const [coordinates, setCoordinates] = useState(polyganDrones);
 
-    useEffect(() => {
-        if (!!testData) {
-            setCoordinates(testData.map((row) => [row[1], row[0]]));
-        }
-    }, [testData]);
+    // useEffect(() => {
+    //     if (!!testData) {
+    //         setCoordinates(testData.map((row) => [row[1], row[0]]));
+    //     }
+    // }, [testData]);
 
 
 
@@ -70,6 +71,30 @@ function CafesMapCm() {
                     })}
                 />
 
+
+                {polyganDrones.map(item => {
+                    if (item.is_circle && !!item.center_lat) {
+                        return (
+                            <Circle
+                                key={item.id}
+                                center={[item.center_lat, item.center_long]}
+                                radius={item.radius}
+                                {...item.options}
+                            />
+                        );
+                    } else if (item.polygon) {
+                        return (
+                            <Polygon
+                                key={item.id}
+                                positions={item.polygon.coordinates[0].map(coordinate => [coordinate[1], coordinate[0]])}
+                                {...item.options}
+                            />
+                        );
+                    }
+                })}
+
+
+                {/* 
                 {FlyForbidden.map((circle, index) => (
                     <Circle
                         key={index}
@@ -112,7 +137,7 @@ function CafesMapCm() {
                         positions={area.polygon}
                         pathOptions={area.options}
                     />
-                ))}
+                ))} */}
 
 
             </MapContainer>

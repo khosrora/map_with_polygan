@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { flyer } from '@/lib/data/flyer';
-import { postDataAPI } from '@/utils/fetchData';
+import { getDataAPI, postDataAPI } from '@/utils/fetchData';
 import { toast } from 'sonner';
 
 const ConfigContext = createContext();
@@ -12,15 +12,37 @@ export const ConfigProvider = ({ children }) => {
     const [fakeData, setFakseData] = useState(null);
     const [listDrones, setListDrones] = useState();
 
+    const [load, setLoad] = useState(false);
+    const [polyganDrones, setPolyganDrones] = useState([]);
 
-    useEffect(() => {
-        setDrone(flyer);
+    const connectionSocket = () => {
         const socket = new WebSocket(`ws://drone.canso.ir/ws/drone2/`);
         socket.onmessage = (message) => {
             const payload = JSON.parse(message.data);
             console.log(payload);
             setListDrones(payload)
         }
+    }
+
+    const getDataPolygan = async () => {
+        try {
+            const res = await getDataAPI('geographic/area/');
+            if (res.status === 200) {
+                setPolyganDrones(res.data)
+            }
+        } catch (error) {
+            console.log(error);
+            toast.error('دریافت مناطق با مشکل مواجه شد')
+        }
+    }
+
+
+    useEffect(() => {
+        setLoad(true)
+        setDrone(flyer);
+        connectionSocket();
+        getDataPolygan();
+        setLoad(false)
     }, [])
 
     const addFakedata = (num) => {
@@ -41,7 +63,7 @@ export const ConfigProvider = ({ children }) => {
     }
 
     return (
-        <ConfigContext.Provider value={{ color, setColor, fakeData, setFakseData, addPolygan, addFakedata, drone, listDrones }}>
+        <ConfigContext.Provider value={{ color, setColor, fakeData, setFakseData, addPolygan, addFakedata, drone, listDrones, polyganDrones, load }}>
             {children}
         </ConfigContext.Provider>
     );
