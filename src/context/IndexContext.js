@@ -2,6 +2,7 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import { flyer } from '@/lib/data/flyer';
 import { getDataAPI, postDataAPI } from '@/utils/fetchData';
 import { toast } from 'sonner';
+// import { fakeDataCrones } from '@/lib/data/fakeData';
 
 const ConfigContext = createContext();
 
@@ -10,7 +11,7 @@ export const ConfigProvider = ({ children }) => {
     const [color, setColor] = useState(null);
     const [drone, setDrone] = useState([]);
     const [fakeData, setFakseData] = useState(null);
-    const [listDrones, setListDrones] = useState();
+    const [listDrones, setListDrones] = useState([]);
 
     const [load, setLoad] = useState(false);
     const [polyganDrones, setPolyganDrones] = useState([]);
@@ -19,8 +20,7 @@ export const ConfigProvider = ({ children }) => {
         const socket = new WebSocket(`ws://drone.canso.ir/ws/drone2/`);
         socket.onmessage = (message) => {
             const payload = JSON.parse(message.data);
-            console.log(payload);
-            setListDrones(payload)
+            setListDrones(listDrones => [...listDrones, payload])
         }
     }
 
